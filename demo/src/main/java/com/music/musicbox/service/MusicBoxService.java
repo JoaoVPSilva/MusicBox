@@ -38,6 +38,20 @@ public class MusicBoxService {
                 .bodyToMono(String.class);
     }
 
+    // public Mono<String> searchMusicByName(String musicName) {
+    //
+    //     return webClientBuilder.baseUrl(musicBrainzApiUrl)
+    //             .build()
+    //             .get()
+    //             .uri(uriBuilder -> uriBuilder
+    //                     .path("recording")
+    //                     .queryParam("query", "recording:" + musicName)
+    //                     .queryParam("fmt", "json")
+    //                     .build())
+    //             .retrieve()
+    //             .bodyToMono(String.class);
+    // }
+
 
 
 }
