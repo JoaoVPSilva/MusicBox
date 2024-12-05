@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.music.musicbox.repository")
-@EntityScan(basePackages = "com.music.musicbox.entity")
+//@EnableJpaRepositories(basePackages = "com.music.musicbox.repository")
+//@EntityScan(basePackages = "com.music.musicbox.entity")
 public class MusicBoxApplication {
     private static final Logger log = LoggerFactory.getLogger(MusicBoxApplication.class);
 
