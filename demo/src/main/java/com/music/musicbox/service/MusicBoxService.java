@@ -2,6 +2,7 @@ package com.music.musicbox.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,6 +16,8 @@ import java.util.List;
 public class MusicBoxService {
 
     private static final Logger log = LoggerFactory.getLogger(MusicBoxService.class);
+
+    @Autowired
     private final WebClient.Builder webClientBuilder;
 
     private final String musicBrainzApiUrl;
@@ -38,19 +41,20 @@ public class MusicBoxService {
                 .bodyToMono(String.class);
     }
 
-    // public Mono<String> searchMusicByName(String musicName) {
-    //
-    //     return webClientBuilder.baseUrl(musicBrainzApiUrl)
-    //             .build()
-    //             .get()
-    //             .uri(uriBuilder -> uriBuilder
-    //                     .path("recording")
-    //                     .queryParam("query", "recording:" + musicName)
-    //                     .queryParam("fmt", "json")
-    //                     .build())
-    //             .retrieve()
-    //             .bodyToMono(String.class);
-    // }
+    public Mono<String> searchMusicByName(String musicName) {
+
+        return webClientBuilder.baseUrl(musicBrainzApiUrl)
+
+                .build()
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("recording")
+                        .queryParam("query", "recording:" + musicName)
+                        .queryParam("fmt", "json")
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class);
+    }
 
 
 

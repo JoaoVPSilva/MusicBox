@@ -30,7 +30,6 @@ public class MusicBoxApiController {
             Name usuario = objectMapper.readValue(name, Name.class);
             System.out.println(usuario.getName());
             return musicBoxService.searchArtistByName(usuario.getName());
-            // return musicBoxService.searchMusicByName(usuario.getName());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,8 +46,7 @@ public class MusicBoxApiController {
             Name usuario = objectMapper.readValue(name, Name.class);
             System.out.println(usuario.getName());
 
-            return musicBoxService.searchArtistByName(usuario.getName());
-            // return musicBoxService.searchMusicByName(usuario.getName());
+            return musicBoxService.searchMusicByName(usuario.getName());
         } catch (Exception e) {
             e.printStackTrace();
         }
