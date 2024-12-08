@@ -1,5 +1,6 @@
 package com.music.musicbox.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,9 +25,9 @@ public class MusicBoxService {
         this.musicBrainzApiUrl = musicBrainzApiUrl;
     }
 
-    public Mono<String> searchArtistByName(String artistName) {
+    public List<String> searchArtistByName(String artistName) {
 
-        return webClientBuilder.baseUrl(musicBrainzApiUrl)
+        Mono<String> apiSearch = webClientBuilder.baseUrl(musicBrainzApiUrl)
                 .build()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -36,8 +37,36 @@ public class MusicBoxService {
                         .build())
                 .retrieve()
                 .bodyToMono(String.class);
+
+        Mono<List<String>> apiData = apiSearch.flatMap(jsonString -> {
+            ObjectMapper objectMapper = new ObjectMapper();
+            try{
+                List<String> artistList = objectMapper.readValue(jsonString, objectMapper.getTypeFactory().constructCollectionType(List.class, String.class));
+                return  Mono.just(artistList);
+            }catch (Exception ex){
+                return Mono.error(ex);
+            }
+        });
+        processList(apiData);
     }
 
+    public void processList (Mono<List<String>> apiData){
+
+        apiData.subscribe(
+                artistList -> {
+                    System.out.println("Lista Recebida: " + artistList);
+                    clearList(artistList);
+                },
+                error -> System.out.println("error" + error)
+        );
+    }
+
+    public List<String> clearList(List<String> list){
+
+        System.out.println("");
+
+        return;
+    }
 
 
 }
