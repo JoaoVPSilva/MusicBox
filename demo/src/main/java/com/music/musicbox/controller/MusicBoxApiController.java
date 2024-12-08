@@ -27,11 +27,26 @@ public class MusicBoxApiController {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            // Converte JSON para objeto
             Name usuario = objectMapper.readValue(name, Name.class);
             System.out.println(usuario.getName());
             return musicBoxService.searchArtistByName(usuario.getName());
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping("/musicname")
+    public Mono<String> searchMusic(@RequestBody String name) {
+        System.out.println(name);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            Name usuario = objectMapper.readValue(name, Name.class);
+            System.out.println(usuario.getName());
+
+            return musicBoxService.searchMusicByName(usuario.getName());
         } catch (Exception e) {
             e.printStackTrace();
         }
